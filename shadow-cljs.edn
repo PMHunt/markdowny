@@ -4,8 +4,7 @@
   "src/main"
   "src/test"]
 
- :dependencies
- []
+ :dependencies [[reagent "1.0.0-alpha2"]]
 
  :dev-http {9090 "public/"}
 
