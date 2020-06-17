@@ -1,0 +1,18 @@
+.bothwindows {
+  display: flex;
+}
+
+.mdwindow {
+  flex: 1;
+}
+
+.htmlwindow {
+  flex: 1;
+  padding-left: 2em;
+}
+
+.mdtext {
+  resize: none;
+  height: 400px;
+  width: 100%;
+}

@@ -12,22 +12,15 @@
   (.makeHtml showdown-converter md))
 
 (defn app []
-  [:div
+  [:div.app
    [:h1 "Markdowny - A simple Markdown editor"]
-   [:div
-    {:style {:display :flex}}
-    [:div
-     {:style {:flex "1"}}
+   [:div.bothwindows
+    [:div.mdwindow
      [:h2 "Markdown"]
-     [:textarea
-      {:on-change #(reset! markdown (-> % .-target .-value))
-       :value @markdown
-       :style {:resize "none"
-               :height "400px"
-               :width "100%"}}]]
-    [:div
-     {:style {:flex "1"
-              :padding-left "2em"}}
+     [:textarea.mdtext
+      {:on-change #(reset! markdown (-> % .-target .-value)) ; swap! no work
+       :value @markdown}]]
+    [:div.htmlwindow
      [:h2 "HTML preview"]
      [:div {:dangerouslySetInnerHTML {:__html (md->html @markdown)}}]]]])
 
