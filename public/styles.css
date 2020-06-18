@@ -16,3 +16,10 @@
   height: 400px;
   width: 100%;
 }
+
+.copybtn {
+  background-color: green;
+  padding: 1em;
+  color: white;
+  border-radius: 10px;
+}

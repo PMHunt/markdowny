@@ -15,20 +15,20 @@
 ;; https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
 
 (defn copy-to-clipboard [s]
-  (let [el (.createElement js/document "textarea")
-        selected (when (pos? (-> js/document .getSelection .-rangeCount))
-                   (-> js/document .getSelection (.getRangeAt 0)))]
-    (set! (.-value el) s)
+  (let [el (.createElement js/document "textarea") ; create <textarea> element
+        selected (when (pos? (-> js/document .getSelection .-rangeCount)) ; existing selection?
+                   (-> js/document .getSelection (.getRangeAt 0)))] ; store selection
+    (set! (.-value el) s) ; put string param into our new <textarea> element
  ;   (println "after el is set" (.-value el))
-    (.setAttribute el "readonly" "")
+    (.setAttribute el "readonly" "") ; readonly so people can't mess with it
     (set! (-> el .-style .-position) "absolute")
-    (set! (-> el .-style .-left) "-9999px")
+    (set! (-> el .-style .-left) "-9999px") ; banish it to outer darkness
     (-> js/document .-body (.appendChild el))
-    (.select el)
-    (.execCommand js/document "copy")
+    (.select el) ; select whatever is in the text area
+    (.execCommand js/document "copy") ; copy selection, only works in user event
   ;  (println "after copy to clipboard")
     (-> js/document .-body (.removeChild el))
-    (when selected
+    (when selected ; restore any original selection
       (-> js/document .getSelection .removeAllRanges)
       (-> js/document .getSelection (.addRange selected)))))
 
@@ -41,13 +41,13 @@
      [:textarea.mdtext
       {:on-change #(reset! markdown (-> % .-target .-value)) ; swap! no work
        :value @markdown}]
-     [:button
+     [:button.copybtn
       {:on-click #(copy-to-clipboard @markdown)}
       "Copy Markdown"]]
     [:div.htmlwindow
      [:h2 "HTML preview"]
      [:div {:dangerouslySetInnerHTML {:__html (md->html @markdown)}}]
-     [:button
+     [:button.copybtn
       {:on-click #(copy-to-clipboard (md->html @markdown))}
       "Copy HTML"]]]])
 
