@@ -19,14 +19,14 @@
         selected (when (pos? (-> js/document .getSelection .-rangeCount))
                    (-> js/document .getSelection (.getRangeAt 0)))]
     (set! (.-value el) s)
-    (println "after el is set" (.-value el))
+ ;   (println "after el is set" (.-value el))
     (.setAttribute el "readonly" "")
     (set! (-> el .-style .-position) "absolute")
     (set! (-> el .-style .-left) "-9999px")
     (-> js/document .-body (.appendChild el))
     (.select el)
     (.execCommand js/document "copy")
-    (println "after copy to clipboard")
+  ;  (println "after copy to clipboard")
     (-> js/document .-body (.removeChild el))
     (when selected
       (-> js/document .getSelection .removeAllRanges)
@@ -43,10 +43,13 @@
        :value @markdown}]
      [:button
       {:on-click #(copy-to-clipboard @markdown)}
-      "Copy to clipboard"]]
+      "Copy Markdown"]]
     [:div.htmlwindow
      [:h2 "HTML preview"]
-     [:div {:dangerouslySetInnerHTML {:__html (md->html @markdown)}}]]]])
+     [:div {:dangerouslySetInnerHTML {:__html (md->html @markdown)}}]
+     [:button
+      {:on-click #(copy-to-clipboard (md->html @markdown))}
+      "Copy HTML"]]]])
 
 (defn mount! []
   (rd/render [app]
