@@ -65,14 +65,14 @@
       (-> js/document .getSelection (.addRange selected)))))
 
 (defn app []
-  [:div.app
+  [:div.container
    [:div.flash-message
     {:style {:transform (if @flash-message
                           "scaleY(1)"
                           "scaleY(0)")
              :transition "transform 0.2s ease-out"}}
     @flash-message]
-   [:h1 "A simple Markdown editor"]
+   [:h1.heading.has-text-centered.is-lowercase "Phil's simple Markdown editor"]
    [:div.bothwindows
 
 
@@ -84,7 +84,7 @@
                     (reset! text-state {:format :md
                                         :value (-> e .-target .-value)})  )
        :value (->md @text-state)}]
-     [:button.copybtn
+    [:button.button.is-primary
       {:on-click (fn []
                    (copy-to-clipboard (->md @text-state))
                    (flash "Markdown copied to clipboard"))}
@@ -101,7 +101,7 @@
                     (reset! text-state {:format :html
                                         :value (-> e .-target .-value)}))
        :value (->html @text-state)}]
-     [:button.copybtn
+     [:button.button.is-primary
       {:on-click (fn []
                    (copy-to-clipboard (->html @text-state))
                    (flash "HTML copied to clipboard"))}
