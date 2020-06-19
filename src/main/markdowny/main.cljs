@@ -65,20 +65,20 @@
       (-> js/document .getSelection (.addRange selected)))))
 
 (defn app []
-  [:div.container
+  [:div.app
    [:div.flash-message
     {:style {:transform (if @flash-message
                           "scaleY(1)"
                           "scaleY(0)")
              :transition "transform 0.2s ease-out"}}
     @flash-message]
-   [:h1.heading "Phil's simple Markdown editor"]
+   [:h1.heading.hero-head "Phil's simple Markdown editor"]
    [:div.bothwindows
 
 
 
    [:div.mdwindow
-    [:h2.heading "Markdown"]
+    [:h2.subheading "Markdown"]
      [:textarea.mdtext
       {:on-change (fn [e]  ; reset! ok in JS, and swap! doesn't work
                     (reset! text-state {:format :md
@@ -91,11 +91,11 @@
       "Copy Markdown"]]
 
     [:div.previewwindow
-     [:h2.heading "HTML Preview"]
+     [:h2.subheading.is-bordered "HTML Preview"]
      [:div.previewtext {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
 
     [:div.htmlwindow
-     [:h2.heading "HTML"]
+     [:h2.subheading "HTML"]
      [:textarea.mdtext
       {:on-change (fn [e]
                     (reset! text-state {:format :html
