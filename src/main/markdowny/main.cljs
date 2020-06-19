@@ -5,7 +5,20 @@
    ["showdown" :as showdown]))
 
 ; (defonce markdown (r/atom ""))
-; (defonce html (r/atom ""))
+                                        ; (defonce html (r/atom ""))
+
+(defonce flash-message (r/atom nil))
+(defonce flash-timeout (r/atom nil)) ; used to kill previous flash on new event
+
+(defn flash
+  ([text]
+   (flash text 3000))
+  ([text ms]
+   (js/clearTimeout @flash-timeout)
+   (reset! flash-message text)
+   (js/setTimeout #(reset! flash-message nil) ms)
+   (reset! flash-timeout
+           (js/setTimeout #(reset! flash-message nil) ms))))
 
 (defonce showdown-converter (showdown/Converter.))
 
@@ -15,7 +28,7 @@
 (defn html->md [html]
   (.makeMarkdown showdown-converter html))
 
-;;; bettter way
+;;; bettter way than html + md  atoms
 (defonce text-state (r/atom {:format :md
                              :value ""}))
 
@@ -53,7 +66,13 @@
 
 (defn app []
   [:div.app
-   [:h1 "Markdowny - A simple Markdown editor"]
+   [:div.flash-message
+    {:style {:transform (if @flash-message
+                          "scaleY(1)"
+                          "scaleY(0)")
+             :transition "transform 0.2s ease-out"}}
+    @flash-message]
+   [:h1 "A simple Markdown editor"]
    [:div.bothwindows
     [:div.mdwindow
      [:h2 "Markdown"]
@@ -63,7 +82,9 @@
                                         :value (-> e .-target .-value)})  )
        :value (->md @text-state)}]
      [:button.copybtn
-      {:on-click #(copy-to-clipboard (->md @text-state))}
+      {:on-click (fn []
+                   (copy-to-clipboard (->md @text-state))
+                   (flash "Markdown copied to clipboard"))}
       "Copy Markdown"]]
 
     [:div.htmlwindow
@@ -74,7 +95,9 @@
                                         :value (-> e .-target .-value)}))
        :value (->html @text-state)}]
      [:button.copybtn
-      {:on-click #(copy-to-clipboard (->html @text-state))}
+      {:on-click (fn []
+                   (copy-to-clipboard (->html @text-state))
+                   (flash "HTML copied to clipboard"))}
       "Copy HTML"]]
 
     [:div.previewwindow
