@@ -74,8 +74,14 @@
     @flash-message]
    [:h1 "A simple Markdown editor"]
    [:div.bothwindows
+
+    [:div.previewwindow
+     [:h2.heading "HTML Preview"]
+     [:div {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
+
     [:div.mdwindow
-     [:h2.heading "Markdown"]
+
+    [:h2.heading "Markdown"]
      [:textarea.mdtext
       {:on-change (fn [e]  ; reset! ok in JS, and swap! doesn't work
                     (reset! text-state {:format :md
@@ -99,10 +105,7 @@
                    (copy-to-clipboard (->html @text-state))
                    (flash "HTML copied to clipboard"))}
       "Copy HTML"]]
-
-    [:div.previewwindow
-     [:h2.heading "HTML Preview"]
-     [:div {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]]])
+]])
 
 (defn mount! []
   (rd/render [app]
