@@ -72,7 +72,7 @@
                           "scaleY(0)")
              :transition "transform 0.2s ease-out"}}
     @flash-message]
-   [:h1.heading.has-text-centered.is-lowercase "Phil's simple Markdown editor"]
+   [:h1.heading "Phil's simple Markdown editor"]
    [:div.bothwindows
 
 
