@@ -75,12 +75,9 @@
    [:h1 "A simple Markdown editor"]
    [:div.bothwindows
 
-    [:div.previewwindow
-     [:h2.heading "HTML Preview"]
-     [:div {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
 
-    [:div.mdwindow
 
+   [:div.mdwindow
     [:h2.heading "Markdown"]
      [:textarea.mdtext
       {:on-change (fn [e]  ; reset! ok in JS, and swap! doesn't work
@@ -92,6 +89,10 @@
                    (copy-to-clipboard (->md @text-state))
                    (flash "Markdown copied to clipboard"))}
       "Copy Markdown"]]
+
+    [:div.previewwindow
+     [:h2.heading "HTML Preview"]
+     [:div.previewtext {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
 
     [:div.htmlwindow
      [:h2.heading "HTML"]

@@ -12,12 +12,15 @@
 
 .htmlwindow {
   flex: 1;
-  padding-left: 2em;
 }
 
 .previewwindow {
   flex: 1;
-  padding-left: 2em;
+}
+
+.previewtext {
+  text-align: left;
+  padding-left: 1em;
 }
 
 .mdtext {
