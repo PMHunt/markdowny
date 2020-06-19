@@ -66,16 +66,16 @@
 
 (defn app []
   [:div.app
+
    [:div.flash-message
     {:style {:transform (if @flash-message
                           "scaleY(1)"
                           "scaleY(0)")
              :transition "transform 0.2s ease-out"}}
     @flash-message]
-   [:h1.heading.hero-head "Phil's simple Markdown editor"]
+
+   [:h1.heading "Phil's simple Markdown editor"]
    [:div.bothwindows
-
-
 
    [:div.mdwindow
     [:h2.subheading "Markdown"]
@@ -91,7 +91,7 @@
       "Copy Markdown"]]
 
     [:div.previewwindow
-     [:h2.subheading.is-bordered "HTML Preview"]
+     [:h2 "HTML Preview"]
      [:div.previewtext {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
 
     [:div.htmlwindow
