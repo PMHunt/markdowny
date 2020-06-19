@@ -75,7 +75,7 @@
    [:h1 "A simple Markdown editor"]
    [:div.bothwindows
     [:div.mdwindow
-     [:h2 "Markdown"]
+     [:h2.heading "Markdown"]
      [:textarea.mdtext
       {:on-change (fn [e]  ; reset! ok in JS, and swap! doesn't work
                     (reset! text-state {:format :md
@@ -88,7 +88,7 @@
       "Copy Markdown"]]
 
     [:div.htmlwindow
-     [:h2 "HTML"]
+     [:h2.heading "HTML"]
      [:textarea.mdtext
       {:on-change (fn [e]
                     (reset! text-state {:format :html
@@ -101,7 +101,7 @@
       "Copy HTML"]]
 
     [:div.previewwindow
-     [:h2 "HTML Preview"]
+     [:h2.heading "HTML Preview"]
      [:div {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]]])
 
 (defn mount! []
