@@ -91,8 +91,8 @@
       "Copy Markdown"]]
 
     [:div.previewwindow
-     [:h2 "HTML Preview"]
-     [:div.previewtext {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
+     [:h2.subheading "HTML Preview"]
+     [:div.previewtext.content {:dangerouslySetInnerHTML {:__html (->html @text-state)}}]]
 
     [:div.htmlwindow
      [:h2.subheading "HTML"]
